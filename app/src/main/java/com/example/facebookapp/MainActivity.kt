@@ -57,7 +57,6 @@ fun FBScaffold(navController: NavHostController) {
         NavHost(navController = navController, startDestination = Destination.Home.route) {
             composable(Destination.Home.route) { HomeScreen() }
             composable(Destination.Notifications.route) { NotificationScreen() }
-//comment
         }
     }
 
