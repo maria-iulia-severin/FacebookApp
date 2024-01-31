@@ -32,13 +32,13 @@ import com.example.facebookapp.data.Dessert
 import com.example.facebookapp.data.Fruit
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, modifier: Modifier) {
     val desserts = remember { mutableStateOf(Dessert.getAllDesserts()) }
     val fruits = remember { mutableStateOf(Fruit.getAllFruits()) }
     val pageSize = 5
     var currentPage = 0
 
-    LazyColumn(modifier = Modifier.background(Color(0xffeeeeee))) {
+    LazyColumn(modifier) {
         val dessertSize = desserts.value.size
         val fruitSize = fruits.value.size
 
@@ -99,11 +99,14 @@ fun HomeScreen(navController: NavController) {
                                 modifier = Modifier.fillMaxSize(),
                                 contentScale = ContentScale.FillHeight
                             )
-                            Text(text = it.name, fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(8.dp)
+                            Text(
+                                text = it.name, fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .padding(8.dp)
                                     .clip(RoundedCornerShape(4.dp))
                                     .background(Color(0xaaffffff))
-                                    .padding(4.dp))
+                                    .padding(4.dp)
+                            )
                         }
                     }
                 }

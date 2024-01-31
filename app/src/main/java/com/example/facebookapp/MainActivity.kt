@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
@@ -15,6 +17,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -69,10 +72,23 @@ fun FBScaffold(navController: NavHostController) {
         }) {
         Scaffold(
             bottomBar = { FBBottomNavigation(navController, onDrawerClicked) }
-        ) {
+        ) { paddingValues ->
+            val stdModifier = Modifier
+                .padding(bottom = paddingValues.calculateBottomPadding())
+                .background(Color(0xFFcccccc))
             NavHost(navController = navController, startDestination = Destination.Home.route) {
-                composable(Destination.Home.route) { HomeScreen(navController) }
-                composable(Destination.Notifications.route) { NotificationScreen() }
+                composable(Destination.Home.route) {
+                    HomeScreen(
+                        navController = navController,
+                        modifier = stdModifier
+                    )
+                }
+                composable(Destination.Notifications.route) {
+                    NotificationScreen(
+                        navController = navController,
+                        modifier = stdModifier
+                    )
+                }
             }
         }
     }
