@@ -67,17 +67,13 @@ fun FBScaffold(navController: NavHostController) {
                 NavigationDrawer()
             }
         }) {
-
         Scaffold(
             bottomBar = { FBBottomNavigation(navController, onDrawerClicked) }
         ) {
             NavHost(navController = navController, startDestination = Destination.Home.route) {
-                composable(Destination.Home.route) { HomeScreen() }
+                composable(Destination.Home.route) { HomeScreen(navController) }
                 composable(Destination.Notifications.route) { NotificationScreen() }
             }
         }
-
     }
-
-
 }
