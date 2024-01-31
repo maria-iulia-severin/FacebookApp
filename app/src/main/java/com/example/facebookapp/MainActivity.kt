@@ -88,10 +88,7 @@ fun FBScaffold(navController: NavHostController) {
                     )
                 }
                 composable(Destination.Notifications.route) {
-                    NotificationScreen(
-                        navController = navController,
-                        modifier = stdModifier
-                    )
+                    NotificationScreen(modifier = stdModifier)
                 }
                 composable(
                     Destination.Detail.route,
@@ -101,9 +98,9 @@ fun FBScaffold(navController: NavHostController) {
                 ) { navBackStackEntry ->
                     val itemId = navBackStackEntry.arguments?.getString("itemId")
                     if (itemId == null)
-                    Toast.makeText(ctx, "Id is requierd", Toast.LENGTH_SHORT).show()
-                     else
-                         ItemDetailScreen(itemId.toInt(), stdModifier)
+                        Toast.makeText(ctx, "Id is requierd", Toast.LENGTH_SHORT).show()
+                    else
+                        ItemDetailScreen(itemId.toInt(), stdModifier)
                 }
             }
         }
