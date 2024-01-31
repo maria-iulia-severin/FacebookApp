@@ -2,6 +2,7 @@ package com.example.facebookapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -18,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import com.example.facebookapp.ui.theme.FacebookAppTheme
 import kotlinx.coroutines.launch
 
@@ -62,6 +65,7 @@ fun FBScaffold(navController: NavHostController) {
     val onDrawerClicked: () -> Unit = {
         scope.launch { drawerState.apply { if (isClosed) open() else close() } }
     }
+    val ctx = LocalContext.current
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -88,6 +92,18 @@ fun FBScaffold(navController: NavHostController) {
                         navController = navController,
                         modifier = stdModifier
                     )
+                }
+                composable(
+                    Destination.Detail.route,
+                    deepLinks = listOf(navDeepLink {
+                        uriPattern = "https://www.facebookapp.com/{itemId}"
+                    })
+                ) { navBackStackEntry ->
+                    val itemId = navBackStackEntry.arguments?.getString("itemId")
+                    if (itemId == null)
+                    Toast.makeText(ctx, "Id is requierd", Toast.LENGTH_SHORT).show()
+                     else
+                         ItemDetailScreen(itemId.toInt(), stdModifier)
                 }
             }
         }
